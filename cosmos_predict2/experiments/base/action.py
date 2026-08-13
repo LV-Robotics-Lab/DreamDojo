@@ -203,7 +203,10 @@ _default_groot_config_14b = LazyDict(
         checkpoint=dict(
             save_iter=5_000,
             # pyrefly: ignore  # missing-attribute
-            load_path=get_checkpoint_path(DEFAULT_CHECKPOINT_14B.s3.uri),
+            # Keep the unused 14B training source lazy. Importing the experiment
+            # registry for a 2B inference run must not download a gated 14B
+            # checkpoint merely to construct this config dictionary.
+            load_path=DEFAULT_CHECKPOINT_14B.s3.uri,
             # load_path="/mnt/amlfs-01/shared/shenyuang/cosmos_logs/exp1201/pretrain/checkpoints/iter_000100000/",
             load_training_state=False,
             strict_resume=False,
